@@ -58,7 +58,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -221,7 +221,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/05/26/%E6%A6%86%E6%A0%91%EF%BC%9A%E5%9D%9A%E9%9F%A7%E4%B8%8E%E5%8E%86%E5%8F%B2%E7%9A%84%E8%A7%81%E8%AF%81%E8%80%85/" target="_self">
+          <img src="https://s3.bmp.ovh/imgs/2024/05/26/63d9a63c0d327825.jpeg" srcset="/img/loading.gif" lazyload alt="榆树：坚韧与历史的见证者">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h2 class="index-header">
         
         <a href="/2024/05/26/%E6%A6%86%E6%A0%91%EF%BC%9A%E5%9D%9A%E9%9F%A7%E4%B8%8E%E5%8E%86%E5%8F%B2%E7%9A%84%E8%A7%81%E8%AF%81%E8%80%85/" target="_self">
@@ -230,7 +236,7 @@
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/05/26/%E6%A6%86%E6%A0%91%EF%BC%9A%E5%9D%9A%E9%9F%A7%E4%B8%8E%E5%8E%86%E5%8F%B2%E7%9A%84%E8%A7%81%E8%AF%81%E8%80%85/" target="_self">
+      <a class="index-excerpt " href="/2024/05/26/%E6%A6%86%E6%A0%91%EF%BC%9A%E5%9D%9A%E9%9F%A7%E4%B8%8E%E5%8E%86%E5%8F%B2%E7%9A%84%E8%A7%81%E8%AF%81%E8%80%85/" target="_self">
         <div>
           榆树：坚韧与历史的见证者 榆树（学名：Ulmus spp.），作为自然界中的一员，不仅以其雄壮的姿态装点着大地，更承载了深厚的文化与历史意义。分布于全球多个角落的榆树，种类繁多，从小巧的灌木到参天大树，无一不展现出其顽强的生命力和适应能力。 自然特征榆树属于榆科植物，其叶片多为卵形或椭圆形，边缘有锯齿，春季嫩叶初展时，满树翠绿，给人以生机勃勃之感。夏季，榆树茂密的树冠成为遮阳避暑的佳处，而秋季则转
         </div>
@@ -419,7 +425,37 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'data,hitokoto'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
